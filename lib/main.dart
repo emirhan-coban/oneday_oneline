@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:oneday_oneline/screens/splash_screen.dart';
+import 'package:oneday_oneline/screens/home_screen.dart';
 import 'services/isar_service.dart';
 import 'utils/app_theme.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -22,8 +25,27 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "1 Day 1 Line",
       theme: AppTheme.darkTheme,
-      home: Scaffold(),
+      home: FutureBuilder<bool>(
+        future: _shouldShowSplash(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Scaffold(body: Center(child: CircularProgressIndicator()));
+          }
+
+          if (snapshot.data == true) {
+            return SplashScreen();
+          } else {
+            return HomeScreen();
+          }
+        },
+      ),
+      routes: {'/home': (context) => const HomeScreen()},
       debugShowCheckedModeBanner: false,
     );
+  }
+
+  Future<bool> _shouldShowSplash() async {
+    final prefs = await SharedPreferences.getInstance();
+    return !(prefs.getBool('splash_shown') ?? false);
   }
 }

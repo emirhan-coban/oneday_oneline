@@ -17,6 +17,15 @@ subprojects {
 }
 subprojects {
     project.evaluationDependsOn(":app")
+    
+    // Fix AGP 8+ namespace requirement for isar_flutter_libs
+    plugins.withId("com.android.library") {
+        configure<com.android.build.gradle.LibraryExtension> {
+            if (namespace == null) {
+                namespace = "dev.isar.${project.name}"
+            }
+        }
+    }
 }
 
 tasks.register<Delete>("clean") {
