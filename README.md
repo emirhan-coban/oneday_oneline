@@ -1,16 +1,3 @@
-# oneday_oneline
+Currently working on..
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img width="1282" height="870" alt="Ekran görüntüsü 2026-01-19 155319" src="https://github.com/user-attachments/assets/dc233888-2904-4f85-af8c-dc9b543ce6b8" />
