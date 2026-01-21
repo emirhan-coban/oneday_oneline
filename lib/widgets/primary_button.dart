@@ -15,7 +15,7 @@ class PrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 153,
-      height: 43,
+      height: 48,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [Color(0xFF383838), Color(0xFF9E9E9E)],
@@ -26,6 +26,7 @@ class PrimaryButton extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: onPressed,
+
           borderRadius: BorderRadius.circular(16),
           child: Center(
             child: Text(
@@ -33,7 +34,7 @@ class PrimaryButton extends StatelessWidget {
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,
-                fontFamily: GoogleFonts.jetBrainsMono().fontFamily,
+                fontFamily: GoogleFonts.poppins().fontFamily,
               ),
             ),
           ),

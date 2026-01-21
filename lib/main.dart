@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:oneday_oneline/screens/history_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:oneday_oneline/screens/splash_screen.dart';
 import 'package:oneday_oneline/screens/home_screen.dart';
@@ -39,7 +40,10 @@ class MyApp extends StatelessWidget {
           }
         },
       ),
-      routes: {'/home': (context) => const HomeScreen()},
+      routes: {
+        '/home': (context) => const HomeScreen(),
+        '/history': (context) => const HistoryScreen(),
+      },
       debugShowCheckedModeBanner: false,
     );
   }

@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 "1Day1Line",
                 style: TextStyle(
                   fontSize: 40,
-                  fontFamily: GoogleFonts.jetBrainsMono().fontFamily,
+                  fontFamily: GoogleFonts.poppins().fontFamily,
                 ),
               ),
               const SizedBox(height: 8),
@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 "Her gün, bir cümle.",
                 style: TextStyle(
                   fontSize: 18,
-                  fontFamily: GoogleFonts.jetBrainsMono().fontFamily,
+                  fontFamily: GoogleFonts.poppins().fontFamily,
                 ),
               ),
               const SizedBox(height: 24),
