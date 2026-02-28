@@ -17,25 +17,24 @@ class HistoryButton extends StatelessWidget {
       width: 153,
       height: 48,
       decoration: BoxDecoration(
-        color: Colors.black.withAlpha(13),
-        border: Border.all(color: Colors.black.withAlpha(77), width: 2),
+        color: Colors.white.withOpacity(0.05),
+        border: Border.all(color: Colors.white.withOpacity(0.15), width: 1.5),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
           onTap: onPressed,
-          splashColor: Colors.white.withAlpha(20),
-          highlightColor: Colors.white.withAlpha(13),
-          focusColor: Colors.white.withAlpha(10),
-          hoverColor: Colors.white.withAlpha(8),
+          splashColor: Colors.white.withOpacity(0.1),
+          highlightColor: Colors.transparent,
           borderRadius: BorderRadius.circular(16),
           child: Center(
             child: Text(
               label,
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.white.withOpacity(0.9),
                 fontSize: 16,
+                fontWeight: FontWeight.w500,
                 fontFamily: GoogleFonts.poppins().fontFamily,
               ),
             ),

@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.example.oneday_oneline"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
     compileOptions {

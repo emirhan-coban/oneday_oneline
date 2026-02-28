@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:oneday_oneline/widgets/history_button.dart';
@@ -73,126 +74,204 @@ class _HomeScreenState extends State<HomeScreen> {
       _hasTodayEntry = true;
       _isSaving = false;
       _textController.clear();
+      _charCount = 0;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // günün tarihi Tarih: XX Ay Yıl
-      // TEXT + METİN ALANI + KELİME SINIRI + BUTON + GEÇMİŞ GÜNLER BUTONU
-      // EN ALTA GÜNÜN TARİHİ AMA GÖRÜNMEZ CENTER YAPMAK İÇİN
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                _formattedToday,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontFamily: GoogleFonts.poppins().fontFamily,
-                  color: Colors.white,
-                ),
+      body: Stack(
+        children: [
+          // Background ambient glows
+          Positioned(
+            top: -100,
+            left: -100,
+            child: Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Theme.of(context).colorScheme.primary.withOpacity(0.15),
               ),
-              const SizedBox(height: 16),
-              Column(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
+                child: Container(color: Colors.transparent),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: -150,
+            right: -50,
+            child: Container(
+              width: 400,
+              height: 400,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: const Color(0xFF4A00E0).withOpacity(0.1),
+              ),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 120, sigmaY: 120),
+                child: Container(color: Colors.transparent),
+              ),
+            ),
+          ),
+          // Main content
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Bugünü bir cümle ile anlat.",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: GoogleFonts.poppins().fontFamily,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: Colors.white.withAlpha(77),
-                        width: 0.6,
-                      ),
-                    ),
-                    child: TextField(
-                      controller: _textController,
-                      maxLines: 6,
-                      autocorrect: true,
-                      keyboardType: TextInputType.multiline,
-                      cursorColor: Colors.white,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontFamily: GoogleFonts.poppins().fontFamily,
-                      ),
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Metninizi buraya yazın...",
-                        hintStyle: TextStyle(color: Colors.white70),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
+                  // Top Date
                   Align(
-                    alignment: Alignment.centerRight,
+                    alignment: Alignment.topCenter,
                     child: Text(
-                      "$_charCount/$_charLimit karakter",
+                      _formattedToday,
                       style: TextStyle(
-                        color: Colors.white70,
                         fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: 1.5,
                         fontFamily: GoogleFonts.poppins().fontFamily,
+                        color: Colors.white54,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 12),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+
+                  // Center Card
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Opacity(
-                        opacity:
-                            (_hasTodayEntry || _charCount == 0 || _isSaving)
-                            ? 0.5
-                            : 1,
-                        child: IgnorePointer(
-                          ignoring:
-                              _hasTodayEntry || _charCount == 0 || _isSaving,
-                          child: PrimaryButton(
-                            label: _hasTodayEntry ? "Kaydedildi" : "Kaydet",
-                            onPressed: _saveToday,
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Bugünü bir cümle ile anlat.",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: GoogleFonts.poppins().fontFamily,
+                            fontSize: 20,
+                            letterSpacing: -0.5,
                           ),
                         ),
                       ),
-                      const SizedBox(width: 16),
-                      HistoryButton(
-                        label: "Geçmiş",
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/history');
-                        },
+                      const SizedBox(height: 20),
+                      Container(
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.surface.withOpacity(0.6),
+                          borderRadius: BorderRadius.circular(24),
+                          border: Border.all(
+                            color: Colors.white.withOpacity(0.08),
+                            width: 1,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 20,
+                              offset: const Offset(0, 10),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            TextField(
+                              controller: _textController,
+                              maxLines: 5,
+                              minLines: 3,
+                              autocorrect: true,
+                              keyboardType: TextInputType.multiline,
+                              cursorColor: Theme.of(
+                                context,
+                              ).colorScheme.primary,
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white.withOpacity(0.9),
+                                height: 1.5,
+                                fontFamily: GoogleFonts.poppins().fontFamily,
+                              ),
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "Metninizi buraya yazın...",
+                                hintStyle: TextStyle(
+                                  color: Colors.white.withOpacity(0.3),
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                "$_charCount/$_charLimit karakter",
+                                style: TextStyle(
+                                  color: _charCount >= _charLimit
+                                      ? Colors.redAccent.withOpacity(0.8)
+                                      : Colors.white38,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: GoogleFonts.poppins().fontFamily,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 32),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: AnimatedOpacity(
+                              duration: const Duration(milliseconds: 300),
+                              opacity:
+                                  (_hasTodayEntry ||
+                                      _charCount == 0 ||
+                                      _isSaving)
+                                  ? 0.5
+                                  : 1.0,
+                              child: PrimaryButton(
+                                label: _hasTodayEntry ? "Kaydedildi" : "Kaydet",
+                                isLoading: _isSaving,
+                                onPressed:
+                                    (_hasTodayEntry ||
+                                        _charCount == 0 ||
+                                        _isSaving)
+                                    ? () {}
+                                    : _saveToday,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: HistoryButton(
+                              label: "Geçmiş",
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/history');
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
+
+                  // Bottom Date (invisible for layout balance)
+                  Opacity(
+                    opacity: 0,
+                    child: Text(
+                      _formattedToday,
+                      style: const TextStyle(fontSize: 14),
+                    ),
+                  ),
                 ],
               ),
-              Text(
-                _formattedToday,
-                style: TextStyle(
-                  fontSize: 48,
-                  fontFamily: GoogleFonts.poppins().fontFamily,
-                  color: Color(0xFF171717),
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -212,6 +291,6 @@ class _HomeScreenState extends State<HomeScreen> {
       'Kasım',
       'Aralık',
     ];
-    return 'Tarih: ${_today.day} ${months[_today.month - 1]}, ${_today.year}';
+    return '${_today.day} ${months[_today.month - 1]} ${_today.year}';
   }
 }
